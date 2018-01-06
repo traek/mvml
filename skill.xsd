@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://megaverseonline.com"
+  xmlns="https://megaverseonline.com" elementFormDefault="qualified" vc:minVersion="1.1"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:include schemaLocation="combat.xsd"/>
+  <xs:include schemaLocation="attribute.xsd"/>
+  <!-- ***** create custom types ***** -->
+  <xs:complexType name="mod_skill_percentage">
+    <xs:simpleContent>
+      <xs:extension base="xs:unsignedByte">
+        <xs:attribute name="skill_name" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="mod_self">
+    <xs:simpleContent>
+      <xs:extension base="xs:unsignedByte">
+        <xs:attribute name="description" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="skill_general">
+    <xs:sequence>
+      <xs:element name="name">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <!-- rewrite position is character pos in name that rewrite begins
+                           1 = entire skill name is rewritable
+                           > skill name length = rewrite is added to end of name, regardless of length -->
+              <xs:attribute name="rewrite_pos">
+                <xs:simpleType>
+                  <xs:restriction base="xs:byte">
+                    <xs:minInclusive value="1"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <!-- modifiable portion of skill name is replaced if value is present
+                   e.g. "Native Language" for "Literacy: Native Language" could be changed to "American"
+                   skill would be displayed as "Literacy: American" but retain skill base of "Literacy: Native Language"-->
+      <xs:element name="name_mod" type="xs:string" minOccurs="0"/>
+      <xs:element name="category" type="xs:string" maxOccurs="unbounded"/>
+      <xs:element name="description" type="xs:string" minOccurs="0"/>
+      <!-- if value exists for pro_bonus, skill will be selectable twice to receive one-time bonus -->
+      <xs:element name="pro_bonus" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:unsignedByte">
+              <xs:attribute name="name_suffix" type="xs:string" default=" (Pro)"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="base_pct" type="mod_self" minOccurs="0" maxOccurs="2"/>
+      <xs:element name="mod_pct_per_lvl" type="xs:unsignedByte" minOccurs="0"/>
+      <xs:element name="gained_at_lvl" type="xs:unsignedByte"/>
+      <xs:element name="mod_attrs" type="attr" minOccurs="0"/>
+      <xs:element name="skill_case_mod" type="mod_self" minOccurs="0" maxOccurs="unbounded"/>
+      <!-- self-enforced skill requirement list; can provide validation only if compliant -->
+      <xs:element name="required_skill" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="known_skill_bonus" type="mod_skill_percentage" minOccurs="0"
+        maxOccurs="unbounded"/>
+      <xs:element name="other_skill_bonus" type="mod_skill_percentage" minOccurs="0"
+        maxOccurs="unbounded"/>
+      <xs:element name="auto_skill" type="skill_general" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="auto_hth" type="skill_hth" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="auto_wp" type="skill_wp" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="add_combat_move" type="combat_ability" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="skill_hth">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="base_apm" type="apm"/>
+      <xs:element name="base_ability" type="combat_ability" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="mod_at_level" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="level" type="xs:byte"/>
+            <xs:element name="type">
+              <xs:complexType>
+                <xs:sequence>
+                  <!-- though these are unbounded, multiple records should be of a different type for each level -->
+                  <xs:element name="mod_apm" type="apm" minOccurs="0" maxOccurs="unbounded"/>
+                  <xs:element name="new_ability" type="combat_ability" minOccurs="0"
+                    maxOccurs="unbounded"/>
+                  <xs:element name="bonus" type="combat_bonus" minOccurs="0" maxOccurs="unbounded"/>
+                  <xs:element name="new_wp" type="skill_wp" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="skill_wp">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string"/>
+      <xs:element name="type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="ancient"/>
+            <xs:enumeration value="modern"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="mod_at_level" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="level" type="xs:byte"/>
+            <xs:element name="type">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="bonus" type="combat_bonus" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <!-- ***** begin skill definition ***** -->
+  <xs:element name="skill" type="skill_general">
+    <xs:alternative test="@format eq 'hth'" type="skill_hth"/>
+    <xs:alternative test="@format eq 'wp'" type="skill_wp"/>
+  </xs:element>
+  <!-- <xs:element name="skill">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="general" type="skill_general"/>
+        <xs:element name="hth" type="skill_hth"/>
+        <xs:element name="wp" type="skill_wp"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element> -->
+</xs:schema>

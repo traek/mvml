@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="13.2">
+    <meta>
+        <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
+        <options/>
+    </meta>
+    <projectTree name="pbml.xpr">
+        <file name="attribute.xsd"/>
+        <file name="class.xsd"/>
+        <file name="combat.xsd"/>
+        <file name="skill.xsd"/>
+    </projectTree>
+</project>

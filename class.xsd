@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://megaverseonline.com"
+  xmlns="https://megaverseonline.com" elementFormDefault="qualified" vc:minVersion="1.1"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:include schemaLocation="skill.xsd"/>
+  <xs:element name="class">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string" minOccurs="1"/>
+        <xs:element name="xp" type="xs:byte" minOccurs="1"/>
+        <!-- there must be a lvl_base for each possible level attainable by a given class, level 15 minimum. Once experience reaches threshold
+             for a given level, the level will automatically be increased, changing all caculations that are modified on a level by level basis
+             restriction of not creating duplicate level entries will need to be manually enforced as this cannot be done in XML Schema (XSD) 1.0
+             e.g. Cyber-Knight
+                  <lvl_base level='1'>0</lvl_base>
+                  <lvl_base level='2'></lvl_base>
+                  ...
+                  <lvl_base level='15'></lvl_base>
+             Secondary O.C.C.s can have a special level 0 defined with the total experience amount required to complete the apprenticeship
+             all skills, perks, abilities, bonuses, etc. will be unavailable until the apprenticeship is completed
+             Level 1 starts 0 normally and subsequent levels should also reflect double experience requirements, if applicable
+             e.g. Cyber-Knight as secondary O.C.C.
+                  <lvl_base level='0'>0</lvl_base>
+                  <lvl_base level='1'>0</lvl_base>
+                  <lvl_base level='2'></lvl_base>
+                  ...
+                  <lvl_base level='15'></lvl_base>
+             For caculation purposes, the amount of experience in level 0 will be deducted from the total experience for that class
+             before determining which level currently applies to the character. -->
+        <xs:element name="lvl_base" minOccurs="15" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="level" type="xs:byte" use="required"/>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
