@@ -4,7 +4,7 @@
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
         <options/>
     </meta>
-    <projectTree name="pbml.xpr">
+    <projectTree name="mvml.xpr">
         <file name="attribute.xsd"/>
         <file name="class.xsd"/>
         <file name="combat.xsd"/>
