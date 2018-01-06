@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://megaverseonline.com"
+  xmlns="https://megaverseonline.com" elementFormDefault="qualified" vc:minVersion="1.1"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:simpleType name="dice_exp">
+    <xs:restriction base="xs:string">
+      <!-- Die expression components (no spaces allowed in expression):
+           1. OPTIONAL "+" or "-" (assumes + if not specified):       specifies whether result is positive or negative
+           2. REQUIRED "###" (any number 1-999):                      number of dice to roll
+           3. REQUIRED "d4", "d6", "d8", "d12", "d20", "d100":        accepts standard role-playing die sizes
+           4. OPTIONAL "+" or "-" or "x" or X":                       mathematical operation to apply to optional modifier
+           5. OPTIONAL "#######" (any number 1-9,999,999, no commas): amount to add/substract/multiply die results by
+           Examples: 1D6x1000, 4d4+2, 2D12-1, 1D100+500, 1D6X1000000 -->
+      <xs:pattern value="[\+\-]?[1-9]([0-9]?){2}[dD][4|6|8|12|20|100]([\+\-xX][0-9]([0-9]?){6})?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="attr_base">
+    <xs:simpleContent>
+      <xs:extension base="xs:byte">
+        <xs:attribute name="calculate" type="dice_exp"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="attr">
+    <xs:all minOccurs="0">
+      <xs:element name="iq" type="attr_base"/>
+      <xs:element name="ma" type="attr_base"/>
+      <xs:element name="me" type="attr_base"/>
+      <xs:element name="ps">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="attr_base">
+              <xs:attribute name="type">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="standard"/>
+                    <xs:enumeration value="bionic"/>
+                    <xs:enumeration value="robotic"/>
+                    <xs:enumeration value="supernatural"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="pe" type="attr_base"/>
+      <xs:element name="pp" type="attr_base"/>
+      <xs:element name="pb" type="attr_base"/>
+      <xs:element name="spd" type="attr_base"/>
+      <xs:element name="spd_fly" type="attr_base"/>
+      <xs:element name="hp" type="attr_base"/>
+      <xs:element name="ar" type="attr_base"/>
+      <xs:element name="sdc" type="attr_base"/>
+      <xs:element name="mdc" type="attr_base"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:element name="attribute" type="attr"/>
+</xs:schema>

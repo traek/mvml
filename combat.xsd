@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://megaverseonline.com"
+  xmlns="https://megaverseonline.com" elementFormDefault="qualified" vc:minVersion="1.1"
+  xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning">
+  <xs:include schemaLocation="attribute.xsd"/>
+  <xs:complexType name="combat_ability">
+    <xs:simpleContent>
+      <xs:extension base="dice_exp">
+        <xs:attribute name="description"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="apm">
+    <xs:simpleContent>
+      <xs:extension base="xs:byte">
+        <xs:attribute name="type">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="all"/>
+              <xs:enumeration value="hth"/>
+              <xs:enumeration value="ranged"/>
+              <xs:enumeration value="flight"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:simpleType name="combat_move">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="strike"/>
+      <xs:enumeration value="parry"/>
+      <xs:enumeration value="dodge"/>
+      <xs:enumeration value="backflip"/>
+      <xs:enumeration value="backflip_escape"/>
+      <xs:enumeration value="backflip_attack"/>
+      <xs:enumeration value="critical_strike"/>
+      <xs:enumeration value="death_blow"/>
+      <xs:enumeration value="disarm"/>
+      <xs:enumeration value="entangle"/>
+      <xs:enumeration value="hold"/>
+      <xs:enumeration value="knockout"/>
+      <xs:enumeration value="roll"/>
+      <xs:enumeration value="stun"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="combat_bonus">
+    <xs:simpleContent>
+      <xs:extension base="xs:unsignedByte">
+        <xs:attribute name="move" type="xs:string"/>
+        <xs:attribute name="ability" type="xs:string"/>
+        <xs:attribute name="calculate" type="dice_exp"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>
