@@ -37,9 +37,6 @@ Currently, no data will be stored at the MVML level as to which of possible conf
 ## Future Projects
 It is anticipated that this project will be used as a basis for future projects in the community to display top-level character data to the end-users in a variety of formats.
 
-### Sponsor Projects
-This project is being sponsored by **[Rifters](https://rifters.org)** with the goal of bringing their own online play system to their Palladium Books-based community. They also plan on brining multiple character export options including the raw MVML and conversion to their existing [online-fillable character sheet](https://megaverseonline.com/download/rifts-fillable-character-sheet/).
-
 ### Community Content
 The data contained in this format is expected to be filled with copyrighted information such as core book skills, spells, races and character classes, just like any other character sheet is today. However, once a common method for self-describing character-centric data is available, Megaverse Online will house derivative works based on the Palladium Books Megaverse&reg; including fan-created O.C.C.s&trade;, races or other non-copyrighted information for those who wish to use it.
 
