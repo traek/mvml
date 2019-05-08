@@ -31,8 +31,9 @@ Currently, no data will be stored at the MVML level as to which of possible conf
 
 ## Standards & Common Tools
 * [XML Schema (XSD) v1.1](https://www.w3.org/TR/2012/REC-xmlschema11-1-20120405/) - XML Schema definition/compliance
-* [oXygen XML Editor v19](https://www.oxygenxml.com/xml_editor.html) - Project IDE
+* [oXygen XML Editor v21](https://www.oxygenxml.com/xml_editor.html) - Project IDE
 * [github](https://github.com) - Project Repository, Wiki, etc.
+* [Dice notation - Wikipedia](https://en.wikipedia.org/wiki/Dice_notation) - Closest thing to a dice notation standard I could find. Words like 'commonly', 'typically' and 'most commonly' don't inspire confidence when speaking of standards
 
 ## Future Projects
 It is anticipated that this project will be used as a basis for future projects in the community to display top-level character data to the end-users in a variety of formats.
